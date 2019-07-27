@@ -1,0 +1,15 @@
+apply plugin: 'java-library'
+apply plugin: 'org.jetbrains.kotlin.jvm'
+apply plugin: 'kotlin-kapt'
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+sourceSets {
+    test.java.srcDirs += 'src/test/kotlin'
+}
+
+dependencies {
+    //Kotlin
+    implementation deps.kotlin.stdlib_java
+}
