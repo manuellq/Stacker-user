@@ -40,8 +40,18 @@ android {
         live {
             applicationId build_versions.application_id
             versionName build_versions.version_code_name
+
+            buildConfigField("String", "BASE_URL", "\"http://api.stackexchange.com/\"")
+        }
+
+        staging {
+            applicationId build_versions.application_id
+            versionName build_versions.version_code_name
+
+            buildConfigField("String", "BASE_URL", "\"http://api.stackexchange.com/\"")
         }
     }
+
     // Remove mockRelease as it's not needed.
     android.variantFilter { variant ->
         if (variant.buildType.name == 'release'
@@ -68,6 +78,11 @@ dependencies {
     //Google lifecycle
     kapt deps.lifecycle.compiler
     implementation deps.lifecycle.extensions
+    //Google room
+    kapt deps.room.compiler
+    implementation deps.room.runtime
+    implementation deps.room.guava
+    implementation deps.room.rxjava2
     //Koin DI
     implementation deps.koin
     //kotlin libraries
@@ -109,6 +124,7 @@ dependencies {
     kapt deps.butter_knife_compiler
     implementation deps.butter_kinfe
     implementation deps.timber
+    implementation deps.layout_shimmer
 
     //Testing Implementation
     testImplementation deps.junit
