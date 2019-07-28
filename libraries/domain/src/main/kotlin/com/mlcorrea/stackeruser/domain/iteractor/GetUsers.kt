@@ -18,8 +18,8 @@ class GetUsers constructor(
     UseCase<PageList<User>, GetUsers.Params>(threadExecutor, postExecutionThread) {
 
     override fun buildUseCaseObservable(params: Params): Observable<PageList<User>> {
-        return platformRepository.getUsers(params.pageSize, params.order, params.sort, params.site)
+        return platformRepository.getUsers(params.page, params.pageSize, params.order, params.sort, params.site)
     }
 
-    data class Params(val pageSize: String, val order: String, val sort: String, val site: String)
+    data class Params(val page: Int, val pageSize: Int, val order: String, val sort: String, val site: String)
 }

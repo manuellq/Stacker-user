@@ -22,4 +22,5 @@
 
 
     <color name="material_grey300">#ffe0e0e0</color>
+    <color name="material_grey300_60">#B3E0E0E0</color>
 </resources>

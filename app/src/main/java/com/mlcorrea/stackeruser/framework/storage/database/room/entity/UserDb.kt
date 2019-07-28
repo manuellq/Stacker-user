@@ -16,13 +16,13 @@ data class UserDb(
     @ColumnInfo(name = "id")
     val id: Long,
     @ColumnInfo(name = "profile_image")
-    val profileImage: String,
+    val profileImage: String?,
     @ColumnInfo(name = "name")
-    val name: String,
+    val name: String?,
     @ColumnInfo(name = "reputation")
-    val reputation: Long,
+    val reputation: Long?,
     @ColumnInfo(name = "location")
-    val location: String,
+    val location: String?,
     @ColumnInfo(name = "creation_date")
     val creationDate: String
 ) : BaseDto<User> {

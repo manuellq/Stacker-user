@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
+        android:foreground="?attr/selectableItemBackground"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ui_profile_photo"
+            android:layout_width="@dimen/image_profile_dp" android:layout_height="@dimen/image_profile_dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <TextView android:id="@+id/ui_name" android:layout_width="0dp" android:layout_height="wrap_content"
+              tools:text="Name"
+              app:layout_constraintStart_toEndOf="@+id/ui_profile_photo" android:layout_marginStart="8dp"
+              android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"
+    />
+
+    <TextView android:id="@+id/ui_reputation" android:layout_width="0dp" android:layout_height="wrap_content"
+              tools:text="Reputation" android:layout_marginTop="8dp"
+              app:layout_constraintTop_toBottomOf="@+id/ui_name" app:layout_constraintEnd_toEndOf="parent"
+              android:layout_marginEnd="8dp" app:layout_constraintStart_toEndOf="@+id/ui_profile_photo"
+              android:layout_marginStart="8dp"/>
+
+    <TextView android:id="@+id/ui_followed"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="@string/text_followed"
+              android:visibility="gone"
+              android:textColor="@color/colorAccent"
+              android:layout_marginEnd="8dp"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintTop_toTopOf="@+id/ui_name"/>
+
+    <View android:id="@+id/ui_disable_frame" android:layout_width="match_parent" android:layout_height="0dp"
+          android:background="@color/material_grey300_60"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintTop_toTopOf="parent" android:visibility="gone"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,12 +1,11 @@
 package com.mlcorrea.stackeruser
 
 import android.app.Application
+import android.content.IntentFilter
 import android.os.StrictMode
 import com.facebook.stetho.Stetho
-import com.mlcorrea.stackeruser.framework.di.apiModule
-import com.mlcorrea.stackeruser.framework.di.appModule
-import com.mlcorrea.stackeruser.framework.di.dataModule
-import com.mlcorrea.stackeruser.framework.di.fragmentScope
+import com.mlcorrea.stackeruser.framework.di.*
+import com.mlcorrea.stackeruser.framework.receiver.NetworkStatusReceiver
 import com.mlcorrea.stackeruser.framework.timber.LifeTreeTimber
 import com.squareup.leakcanary.LeakCanary
 import org.koin.android.ext.koin.androidContext
@@ -31,6 +30,14 @@ class App : Application() {
         initTimber()
         strictMode()
         initializeStetho()
+        initReceiver()
+    }
+
+    private fun initReceiver() {
+        val intentFilter = IntentFilter()
+        intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE")
+        intentFilter.addAction("android.net.wifi.WIFI_STATE_CHANGED")
+        registerReceiver(NetworkStatusReceiver(), intentFilter)
     }
 
     private fun injectApplicationComponent() {
@@ -42,7 +49,9 @@ class App : Application() {
                     apiModule,
                     dataModule,
                     appModule,
-                    fragmentScope
+                    fragmentScope,
+                    databaseModule,
+                    activityScope
                 )
             )
         }

@@ -1,9 +1,13 @@
+apply plugin: 'org.sonarqube'
+
 buildscript {
     apply from: 'versions.gradle'
     addRepos(repositories)
     dependencies {
         classpath deps.kotlin.plugin
         classpath 'com.android.tools.build:gradle:3.4.2'
+        classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.6.2'
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.0.0"
     }
 }
 
@@ -13,4 +17,25 @@ allprojects {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+
+sonarqube {
+    properties {
+        property "sonar.projectKey", "stacker_user"
+        property "sonar.projectName", "Stacker user"
+        property "sonar.projectVersion", "${build_versions.version_code_name}"
+        property "sonar.exclusions", "src/main/java/com/mlcorrea/stackeruser/framework/di/**, src/main/res/**,**/*test*/**,build/**,*.iml,**/*generated*"
+
+        property "sonar.host.url", "http://localhost:9000"
+        property "sonar.login", "8d129aee06a7e1dc68baa15d6762db350f343c59"
+
+        property "sonar.java.coveragePlugin", "jacoco"
+        property "sonar.jacoco.reportPaths", ["$project.rootDir/app/build/jacoco/testMockDebugUnitTest.exec",
+                                              "$project.rootDir/app/build/outputs/code-coverage/connected/*coverage.ec",
+                                              "$project.rootDir/data/build/jacoco/test.exec",
+                                              "$project.rootDir/domain/build/jacoco/test.exec"]
+        property "sonar.coverage.jacoco.xmlReportPaths", "$project.rootDir/app/build/reports/jacoco/testDebugUnitTestCoverage/testDebugUnitTestCoverage.xml, $project.rootDir/app/build/reports/coverage/mock/debug/report.xml"
+        property "sonar.coverage.exclusions", "**/com/mlcorrea/lostparadisefm/framework/di/**"
+    }
 }

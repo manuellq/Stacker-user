@@ -12,8 +12,9 @@ import retrofit2.http.Query
 interface ApiService {
 
     @GET("/2.2/users")
-    fun getAlbums(
-        @Query("pagesize") pageSize: String, @Query("order") order: String,
+    fun getUsers(
+        @Query("page") page: Int,
+        @Query("pagesize") pageSize: Int, @Query("order") order: String,
         @Query("sort") sort: String, @Query("site") site: String
     ): Observable<NetworkPageResponseDTO<UserDTO>>
 

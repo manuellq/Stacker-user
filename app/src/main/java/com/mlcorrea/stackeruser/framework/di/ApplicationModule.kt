@@ -4,8 +4,15 @@ import com.mlcorrea.stackeruser.BuildConfig
 import com.mlcorrea.stackeruser.data.executor.JobExecutor
 import com.mlcorrea.stackeruser.domain.executor.PostExecutionThread
 import com.mlcorrea.stackeruser.domain.executor.ThreadExecutor
+import com.mlcorrea.stackeruser.domain.iteractor.GetUsers
+import com.mlcorrea.stackeruser.domain.iteractor.UpdateUserAction
 import com.mlcorrea.stackeruser.framework.network.Injection
 import com.mlcorrea.stackeruser.ui.UIThread
+import com.mlcorrea.stackeruser.ui.feature.userdetails.UserDetailsActivity
+import com.mlcorrea.stackeruser.ui.feature.userdetails.UserDetailsViewModel
+import com.mlcorrea.stackeruser.ui.feature.userlist.UserListFragment
+import com.mlcorrea.stackeruser.ui.feature.userlist.UserListVM
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
@@ -32,5 +39,18 @@ val dataModule = module {
 }
 
 val fragmentScope = module {
+    scope(named<UserListFragment>()) {
+        viewModel { UserListVM(get(), get()) }
+        scoped { GetUsers(get(), get(), get()) }
+        scoped { UpdateUserAction(get(), get(), get()) }
+    }
 
+}
+
+val activityScope = module {
+
+    scope(named<UserDetailsActivity>()) {
+        viewModel { UserDetailsViewModel(get()) }
+        scoped { UpdateUserAction(get(), get(), get()) }
+    }
 }

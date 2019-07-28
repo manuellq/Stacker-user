@@ -26,8 +26,14 @@ class PlatformRepositoryImpl constructor(
         }
     }
 
-    override fun getUsers(pageSize: String, order: String, sort: String, site: String): Observable<PageList<User>> {
-        return getUsersNetwork(pageSize, order, sort, site)
+    override fun getUsers(
+        page: Int,
+        pageSize: Int,
+        order: String,
+        sort: String,
+        site: String
+    ): Observable<PageList<User>> {
+        return getUsersNetwork(page, pageSize, order, sort, site)
             .flatMap { page: PageList<User> ->
                 getCheckForUserActions(page.data ?: emptyList())
                     .map { finalUsers: List<User> ->
@@ -44,6 +50,7 @@ class PlatformRepositoryImpl constructor(
                     .map { userAction: UserAction ->
                         user.copy(follow = userAction.follow, block = userAction.block)
                     }
+                    .onErrorReturnItem(user)
                     .toObservable()
             }
             .toList()
@@ -51,12 +58,13 @@ class PlatformRepositoryImpl constructor(
     }
 
     private fun getUsersNetwork(
-        pageSize: String,
+        page: Int,
+        pageSize: Int,
         order: String,
         sort: String,
         site: String
     ): Observable<PageList<User>> {
-        return apiController.getUsers(pageSize, order, sort, site)
+        return apiController.getUsers(page, pageSize, order, sort, site)
             .map { response: NetworkPageResponseDTO<UserDTO> ->
                 val userList = response.data?.map { userDTO: UserDTO -> userDTO.unwrapDto() } ?: emptyList()
                 PageList(userList, response.hasMore, response.quotaMax, response.quotaRemaining)

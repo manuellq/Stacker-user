@@ -14,13 +14,13 @@ data class UserDTO(
     @Json(name = "account_id")
     val id: Long,
     @Json(name = "profile_image")
-    val profileImage: String,
+    val profileImage: String?,
     @Json(name = "display_name")
-    val name: String,
+    val name: String?,
     @Json(name = "reputation")
-    val reputation: Long,
+    val reputation: Long?,
     @Json(name = "location")
-    val location: String,
+    val location: String?,
     @Json(name = "creation_date")
     val creationDate: String
 ) : BaseDto<User> {

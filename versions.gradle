@@ -57,6 +57,13 @@ deps.lifecycle = lifecycle
 
 deps.constraint_layout = "androidx.constraintlayout:constraintlayout:$versions.constraint_layout"
 
+def navigation = [:]
+navigation.fragment = "androidx.navigation:navigation-fragment-ktx:2.0.0"
+navigation.uiktx = "androidx.navigation:navigation-ui-ktx:2.0.0"
+deps.navigation = navigation
+
+//Dependency injection
+
 deps.koin = 'org.koin:koin-androidx-viewmodel:2.0.1'
 
 //square libraries
@@ -110,6 +117,7 @@ deps.timber = "com.jakewharton.timber:timber:$versions.timber"
 deps.butter_knife_compiler = "com.jakewharton:butterknife-compiler:$versions.butter_knife"
 deps.butter_kinfe = "com.jakewharton:butterknife:$versions.butter_knife"
 deps.layout_shimmer = 'io.supercharge:shimmerlayout:2.1.0'
+deps.picasso = "com.squareup.picasso:picasso:2.5.2"
 
 deps.okhttp3 = "com.squareup.okhttp3:okhttp:$versions.okhttp_logging_interceptor"
 deps.okhttp_signpost = "se.akerfeldt:okhttp-signpost:$versions.okhttp_signpost"
@@ -145,7 +153,7 @@ deps.live_cycle = "androidx.arch.core:core-testing:$versions.Lifecycle"
 //testImplementation
 deps.junit = "junit:junit:$versions.junit"
 deps.roboelectric = "org.robolectric:robolectric:$versions.robolectric"
-deps.mockk = "io.mockk:mockk:1.9.2"
+deps.mockk = "io.mockk:mockk:1.9.3"
 deps.truth = "com.google.truth:truth:0.43"
 ext.deps = deps
 

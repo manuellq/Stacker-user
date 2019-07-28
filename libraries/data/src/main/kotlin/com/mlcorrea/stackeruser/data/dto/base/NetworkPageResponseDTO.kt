@@ -1,8 +1,5 @@
 package com.mlcorrea.stackeruser.data.dto.base
 
-import com.mlcorrea.stackeruser.data.dto.UserDTO
-import com.mlcorrea.stackeruser.domain.model.PageList
-import com.mlcorrea.stackeruser.domain.model.User
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 

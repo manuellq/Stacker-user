@@ -24,6 +24,7 @@ data class NetworkRequestState(
         val LOADED = NetworkRequestState(StatusRequest.SUCCESS)
         val LOADING = NetworkRequestState(StatusRequest.RUNNING)
         val EMPTY = NetworkRequestState(StatusRequest.EMPTY)
+        fun emptyError(exception: Throwable) = NetworkRequestState(StatusRequest.EMPTY, exception)
         fun error(exception: Throwable?) = NetworkRequestState(StatusRequest.FAILED, exception)
     }
 }

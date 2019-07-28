@@ -10,7 +10,8 @@ import io.reactivex.Observable
 interface ApiController {
 
     fun getUsers(
-        pageSize: String,
+        page: Int,
+        pageSize: Int,
         order: String,
         sort: String,
         site: String

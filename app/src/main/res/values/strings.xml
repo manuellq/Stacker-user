@@ -1,7 +1,12 @@
 <resources>
     <string name="app_name">Stacker user</string>
-    <string name="text_empty_list_generic">No result</string>
+    <string name="text_empty_list_generic">Empty</string>
     <string name="retry_button">Retry</string>
     <string name="exception_generic_message">There was an application error</string>
     <string name="exception_message_no_connection">There is no internet connection</string>
+    <string name="text_block">Block</string>
+    <string name="text_follow">Follow</string>
+    <string name="text_unfollow">Unfollow</string>
+    <string name="text_unblock">Unblock</string>
+    <string name="text_followed">Followed</string>
 </resources>

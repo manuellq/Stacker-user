@@ -12,11 +12,12 @@ import io.reactivex.Observable
 class ApiControllerImpl constructor(private val apiManager: ApiManager) : ApiController {
 
     override fun getUsers(
-        pageSize: String,
+        page: Int,
+        pageSize: Int,
         order: String,
         sort: String,
         site: String
     ): Observable<NetworkPageResponseDTO<UserDTO>> {
-        return apiManager.apiServices.getAlbums(pageSize,order,sort,site)
+        return apiManager.apiServices.getUsers(page, pageSize, order, sort, site)
     }
 }

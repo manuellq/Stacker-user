@@ -50,6 +50,17 @@ abstract class BaseFragment : Fragment() {
     }
 
     /**
+     * Display a snack bar
+     *
+     * @param message [String]
+     */
+    fun showSnackBar(message: String?) {
+        activity?.let {
+            (it as BaseActivity).showSnackBar(message)
+        }
+    }
+
+    /**
      * Get error message from the exception
      *
      * @param exception [Exception]

@@ -9,7 +9,7 @@ import io.reactivex.Observable
  */
 interface PlatformRepository {
 
-    fun getUsers(pageSize: String, order: String, sort: String, site: String): Observable<PageList<User>>
+    fun getUsers(page: Int, pageSize: Int, order: String, sort: String, site: String): Observable<PageList<User>>
 
     fun updateUserAction(userId: Long, follow: Boolean, block: Boolean): Observable<Boolean>
 }
