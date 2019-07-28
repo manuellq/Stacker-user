@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: "androidx.navigation.safeargs.kotlin"
 
 android {
     compileSdkVersion build_versions.target_sdk
@@ -36,18 +37,64 @@ android {
         }
     }
 
+    lintOptions {
+        disable 'InvalidPackage'
+        htmlReport true
+        htmlOutput file("build/reports/lint-report.html")
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+        ignoreWarnings false
+        disable 'InvalidPackage'            //Some libraries have issues with this.
+        disable 'OldTargetApi'              //Lint gives this warning but SDK 20 would be Android L Beta.
+        disable 'IconDensities'             //For testing purpose. This is safe to remove.
+        disable 'IconMissingDensityFolder'  //For testing purpose. This is safe to remove.
+    }
+
     productFlavors {
         live {
             applicationId build_versions.application_id
             versionName build_versions.version_code_name
+
+            buildConfigField("String", "BASE_URL", '"http://api.stackexchange.com/"')
+        }
+
+        staging {
+            applicationId build_versions_staging.application_id_staging
+            versionName build_versions_staging.version_name_staging
+
+            buildConfigField("String", "BASE_URL", '"http://api.stackexchange.com/"')
+        }
+
+        mock {
+            applicationId build_versions_mock.application_id_mock
+            versionName build_versions_mock.version_code_name
+
+            buildConfigField("String", "BASE_URL", '"http://api.stackexchange.com/"')
         }
     }
+
     // Remove mockRelease as it's not needed.
     android.variantFilter { variant ->
         if (variant.buildType.name == 'release'
                 && variant.flavors[0].name == 'mock') {
             variant.ignore = true
         }
+    }
+
+    testOptions.unitTests.all {
+
+        // Always show the result of every unit test, even if it passes.
+        testLogging {
+            events 'passed', 'skipped', 'failed', 'standardOut', 'standardError'
+        }
+    }
+
+    //Enforces Gradle to only compile the version number you state for
+    //all dependencies, no matter which version number the dependencies have stated.
+    configurations.all {
+        resolutionStrategy.force 'com.google.code.findbugs:jsr305:2.0.1'
     }
 }
 
@@ -68,6 +115,14 @@ dependencies {
     //Google lifecycle
     kapt deps.lifecycle.compiler
     implementation deps.lifecycle.extensions
+    //Google room
+    kapt deps.room.compiler
+    implementation deps.room.runtime
+    implementation deps.room.guava
+    implementation deps.room.rxjava2
+    //navigation
+    implementation deps.navigation.fragment
+    implementation deps.navigation.uiktx
     //Koin DI
     implementation deps.koin
     //kotlin libraries
@@ -109,6 +164,9 @@ dependencies {
     kapt deps.butter_knife_compiler
     implementation deps.butter_kinfe
     implementation deps.timber
+    implementation deps.layout_shimmer
+    implementation deps.picasso
+    implementation 'de.hdodenhof:circleimageview:3.0.0'
 
     //Testing Implementation
     testImplementation deps.junit
@@ -117,9 +175,13 @@ dependencies {
     testImplementation(deps.roboelectric, {
         exclude group: 'com.android.support'
     })
+    testImplementation "androidx.arch.core:core-testing:2.0.1"
+
 
     //Testing test Implementation
-    androidTestImplementation deps.truth
+    testImplementation(deps.truth) {
+        exclude group: 'com.google.guava'
+    }
     androidTestImplementation deps.runner
     androidTestImplementation deps.rules
     androidTestImplementation deps.espresso.core
