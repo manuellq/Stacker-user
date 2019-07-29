@@ -3,13 +3,14 @@ package com.mlcorrea.stackeruser.ui.feature.userlist
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.mlcorrea.stackeruser.UnitTest
+import com.mlcorrea.stackeruser.domain.exception.HttpNoInternetConnectionException
 import com.mlcorrea.stackeruser.domain.iteractor.GetUsers
 import com.mlcorrea.stackeruser.domain.iteractor.UpdateUserAction
+import com.mlcorrea.stackeruser.domain.model.adapter.ViewModelData
 import com.mlcorrea.stackeruser.domain.network.NetworkRequestState
-import io.mockk.every
+import com.mlcorrea.stackeruser.domain.network.StatusRequest
 import io.mockk.impl.annotations.MockK
 import io.mockk.verify
-import io.reactivex.observers.TestObserver
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -28,10 +29,14 @@ class UserListVMTest : UnitTest() {
     @MockK
     lateinit var updateUserAction: UpdateUserAction
 
-    @MockK
+    @MockK(relaxUnitFun = true)
     lateinit var snackbarError: Observer<Exception>
-    @MockK
+    @MockK(relaxUnitFun = true)
     lateinit var networkState: Observer<NetworkRequestState>
+    @MockK(relaxUnitFun = true)
+    lateinit var progressbar: Observer<Boolean>
+    @MockK
+    lateinit var response: Observer<List<ViewModelData>>
 
     private lateinit var viewModel: UserListVM
 
@@ -41,7 +46,16 @@ class UserListVMTest : UnitTest() {
     }
 
     @Test
-    fun `get data from network`() {
-
+    fun `no internet connection detected`() {
+        //Given
+        viewModel.snackBarError.observeForever(snackbarError)
+        viewModel.getNetworkState().observeForever(networkState)
+        viewModel.getProgressBarRefreshLive().observeForever(progressbar)
+        //When
+        viewModel.setNewConnectionStatus(false)
+        //Then
+        verify { progressbar.onChanged(false) }
+        verify { networkState.onChanged(eq(NetworkRequestState(StatusRequest.EMPTY, null))) }
+        verify { snackbarError.onChanged(any<HttpNoInternetConnectionException>()) }
     }
 }
