@@ -24,7 +24,7 @@ data class UserDb(
     @ColumnInfo(name = "location")
     val location: String?,
     @ColumnInfo(name = "creation_date")
-    val creationDate: String
+    val creationDate: Long
 ) : BaseDto<User> {
 
     override fun unwrapDto(): User {

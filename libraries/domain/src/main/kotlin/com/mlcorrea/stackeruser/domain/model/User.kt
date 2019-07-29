@@ -12,7 +12,7 @@ data class User(
     val name: String?,
     val reputation: Long?,
     val location: String?,
-    val creationDate: String,
+    val creationDate: Long,
     val follow: Boolean = false,
     val block: Boolean = false
 ) : ViewModelData, Serializable

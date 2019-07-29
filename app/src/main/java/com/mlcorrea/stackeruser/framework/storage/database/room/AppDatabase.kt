@@ -13,7 +13,7 @@ import com.mlcorrea.stackeruser.framework.storage.database.room.entity.UserDb
 
 @Database(
     entities = [(UserDb::class), (UserActionsDb::class)],
-    version = 1
+    version = 2
 )
 abstract class AppDatabase : RoomDatabase() {
 

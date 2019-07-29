@@ -22,7 +22,7 @@ data class UserDTO(
     @Json(name = "location")
     val location: String?,
     @Json(name = "creation_date")
-    val creationDate: String
+    val creationDate: Long
 ) : BaseDto<User> {
 
     override fun unwrapDto(): User {

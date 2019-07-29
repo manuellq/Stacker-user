@@ -13,6 +13,7 @@ import com.jakewharton.rxbinding2.view.RxView
 import com.mlcorrea.stackeruser.R
 import com.mlcorrea.stackeruser.domain.model.User
 import com.mlcorrea.stackeruser.framework.extension.observe
+import com.mlcorrea.stackeruser.framework.extension.parseToDateSting
 import com.mlcorrea.stackeruser.ui.base.BaseActivity
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
@@ -89,7 +90,8 @@ class UserDetailsActivity : BaseActivity() {
         user?.apply {
             uiName.text = String.format(formatName, name, id.toString())
             uiLocation.text = location
-            uiDate.text = creationDate
+
+            uiDate.text = creationDate.parseToDateSting()
             uiReputation.text = reputation.toString()
             uiFollowBtn.text = if (follow) getString(R.string.text_unfollow) else getString(R.string.text_follow)
             uiBlockBtn.text = if (block) getString(R.string.text_unblock) else getString(R.string.text_block)
